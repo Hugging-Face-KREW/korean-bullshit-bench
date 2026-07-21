@@ -87,7 +87,9 @@ def build_translated(
     return output
 
 
-def build_native(native_csv: Path) -> list[dict[str, object]]:
+def build_native(
+    native_csv: Path, keep_creator: str | None = None
+) -> list[dict[str, object]]:
     counters: defaultdict[tuple[str, str], int] = defaultdict(int)
     output = []
 
@@ -103,6 +105,20 @@ def build_native(native_csv: Path) -> list[dict[str, object]]:
             f"{DOMAIN_CODES[domain]}_{TECHNIQUE_CODES[technique]}_"
             f"{counters[key]:02d}"
         )
+        if keep_creator and row["creator"].strip() != keep_creator:
+            output.append(
+                {
+                    "id": item_id,
+                    "domain": None,
+                    "technique": None,
+                    "difficulty": None,
+                    "question": None,
+                    "nonsensical_element": None,
+                    "is_control": None,
+                }
+            )
+            continue
+
         output.append(
             {
                 "id": item_id,
@@ -123,10 +139,14 @@ def main() -> None:
     parser.add_argument("--native-csv", type=Path, required=True)
     parser.add_argument("--original-json", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, default=Path("data"))
+    parser.add_argument(
+        "--keep-native-creator",
+        help="Keep only this creator's native rows and emit null placeholders for others",
+    )
     args = parser.parse_args()
 
     translated = build_translated(args.translated_csv, args.original_json)
-    native = build_native(args.native_csv)
+    native = build_native(args.native_csv, args.keep_native_creator)
 
     write_jsonl(args.output_root / "translated_v2" / "test.jsonl", translated)
     write_jsonl(args.output_root / "ko_native_v0_1" / "test.jsonl", native)

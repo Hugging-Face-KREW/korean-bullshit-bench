@@ -9,13 +9,17 @@ configs:
   translated_v2:
     split: test
     path: data/translated_v2/test.jsonl
-    questions: 100
+    rows: 100
+    populated_questions: 100
+    placeholder_rows: 0
     description: Korean translation of the BullshitBench v2 question set
   ko_native_v0_1:
     split: test
     path: data/ko_native_v0_1/test.jsonl
-    questions: 48
-    description: Korean-native question set across 6 domains and 8 techniques
+    rows: 48
+    populated_questions: 8
+    placeholder_rows: 40
+    description: Korean-native contribution slots across 6 domains and 8 techniques
 
 scoring:
   0:
