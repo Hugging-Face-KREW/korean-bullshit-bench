@@ -1,0 +1,13 @@
+Korean BullshitBench v0.1.0
+Copyright (c) 2026 Korean BullshitBench contributors
+
+The translated_v2 subset is a Korean translation and adaptation of
+BullshitBench v2, created by Peter Gostev:
+
+https://github.com/petergpt/bullshit-benchmark
+
+BullshitBench is distributed under the MIT License. Its original copyright
+notice and license text are preserved in LICENSES/BullshitBench-LICENSE.
+
+The original author does not necessarily endorse this translation or the
+ko_native_v0_1 subset.
